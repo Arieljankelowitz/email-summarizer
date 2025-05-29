@@ -23,7 +23,7 @@ This is a Google Apps Script that summarizes your unread Gmail messages from the
 - API keys are **not stored in code** – they go in script properties
 - `.clasp.json`, backups, and other sensitive files are listed in `.gitignore`
 
-## 🛠 Tech Used
+## 🛠 Tech Stack
 
 - Google Apps Script (GmailApp, UrlFetchApp)
 - OpenAI GPT-3.5 / GPT-4
