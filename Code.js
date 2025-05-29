@@ -28,7 +28,7 @@ console.log(emailString);
   var summary = summarizeUsingOpenAI(emailString);
  console.log(summary);
   // Send the summary to yourself
- // sendSummaryToSelf(summary);
+ sendSummaryToSelf(summary);
 }
 
 function sendSummaryToSelf(summary) {
