@@ -1,4 +1,17 @@
 function summarizeUnreadEmails() {
+  var emails = getUnreadEmails();
+  var emailContent = formatEmailPrompt(emails);
+  
+  console.log(`Email content to be summarized:\n\n${emailContent}`);
+
+  var summary = summarizeUsingOpenAI(emailContent);
+  
+  console.log(`AI-generated summary:\n\n${summary}`);
+
+  sendSummaryToSelf(summary);
+}
+
+function getUnreadEmails() {
   var messages = [];
   var unreadThreads = GmailApp.search("is:unread newer_than:7d", 0, 10); // Fetch first 10 unread threads
 
@@ -17,18 +30,15 @@ function summarizeUnreadEmails() {
       }
     }
   }
-
+  return messages;
+}
+function formatEmailPrompt(messages) {
   var emailString = "";
   for (var i = 0; i < messages.length; i++) {
     emailString += "Subject: " + messages[i].subject + "\n";
     emailString += "Body: " + messages[i].body + "\n\n";
   }
-console.log(emailString);
-  // Call OpenAI API to summarize (optional)
-  var summary = summarizeUsingOpenAI(emailString);
- console.log(summary);
-  // Send the summary to yourself
- sendSummaryToSelf(summary);
+  return emailString;
 }
 
 function sendSummaryToSelf(summary) {
@@ -40,7 +50,7 @@ function sendSummaryToSelf(summary) {
 }
 
 function summarizeUsingOpenAI(emailContent) {
- var apiKey = PropertiesService.getScriptProperties().getProperty("OPENAI_API_KEY");
+  var apiKey = PropertiesService.getScriptProperties().getProperty("OPENAI_API_KEY");
 
   var url = "https://api.openai.com/v1/chat/completions"; // Use the correct endpoint for chat models
 
